@@ -1,0 +1,49 @@
+{
+	"projectName": "",
+	"projectVersion": "",
+	"releaseDate": "",
+	"sourceDir": "F:\\Work\\Source Code\\AllieSFCS\\MA\\MACHECKA02",
+	"sourceBin": "Bin",
+	"targetDir": "",
+	"targetName": "${projectName}_${projectVersion}_${releaseDate}",
+	"packageTask": {
+		"exceptDir": [
+			"App_Data",
+			"App_Start",
+			"My Project",
+			"Properties",
+			"obj",
+			"Service References",
+			"Web References",
+			"bin\\x64",
+			"bin\\x86"
+		],
+		"exceptFile": [
+			"Web.Debug.config",
+			"Web.Release.config",
+			"packages.config",
+			"Thumbs.db"
+		],
+		"exceptSuffix": [
+			"*.gpState",
+			"*.vbproj",
+			"*.csproj",
+			"*.vb",
+			"*.cs",
+			"*.user",
+			"*.sln",
+			"*.suo",
+			"*.docx",
+			"*.tmp",
+			"*.Publish.xml",
+			"logs\\*.txt",
+			"bin\\*.pdb",
+			"bin\\*.xml",
+			"Bin\\*.pdb",
+			"Bin\\*.xml"
+		],
+		"newFile": [
+			"${projectName}_${projectVersion}_${releaseDate}_UT.docx"
+		]
+	}
+}
