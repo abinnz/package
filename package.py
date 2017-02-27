@@ -102,6 +102,13 @@ def getFileVersion(binPath):
     return version;
 
 def initProjectData(projectData):
+    # 命令行参数读取
+    if len(sys.argv) < 3:
+        print('You can assign source directory through command line arguments,\nexample: -s "path"');
+    if len(sys.argv) == 3:
+        if sys.argv[1] == '-s' and os.path.exists(sys.argv[2]):
+            projectData['sourceDir'] = sys.argv[2];
+
     # 判读source是否存在
     if not os.path.isdir(projectData['sourceDir']):
         raise Exception('SourceDir: ' + projectData['sourceDir'] + ' isn\'t exist.');
