@@ -2,9 +2,9 @@
 	"projectName": "",
 	"projectVersion": "",
 	"releaseDate": "",
-	"sourceDir": "",
+	"sourceDir": "F:\\Work\\Source Code\\SFCS\\MI\\MIREOPTA01",
 	"sourceBin": "bin",
-	"targetDir": "",
+	"targetDir": "%Desktop%",
 	"targetName": "${projectName}_${projectVersion}_${releaseDate}",
 	"packageTask": {
 		"exceptDir": [

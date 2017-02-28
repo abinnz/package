@@ -8,20 +8,24 @@ import re
 import win32api
 
 # 加载json
-def loadProjectData(fileName = 'project_data.json'):
-    projectData = {}
-    with open(fileName,'r') as jsonFile:
+def loadProjectData(baseDir,fileName = 'project_data.json'):
+    projectData = {};
+    with open(os.path.join(baseDir,fileName),'r') as jsonFile:
         projectData = json.load(jsonFile);
         return projectData;
 
-def createTargetDir(projectData):
+def createTargetDir(baseDir,projectData):
     dirName = projectData['targetName'];
     if dirName == '':
         raise Exception('TargetName cann\'t be empty.');
-    path = os.path.abspath('');
+    # baseDir脚本运行目录
+    path = '';
     # 默认路径
     if projectData['targetDir'] == '':
-        path = os.path.join(path,dirName);
+        path = os.path.join(baseDir,dirName);
+    # 桌面路径
+    elif projectData['targetDir'] == '%Desktop%':
+        path = os.path.join(os.path.expanduser("~"),'Desktop',dirName);
     # 指定路径
     else:
         path = os.path.join(projectData['targetDir'],dirName);
@@ -56,11 +60,10 @@ def copyDirAndFile(baseSourcePath,sourcePath,targetPath,packageTask):
                 shutil.copy(path,targetPath);
                 print('Copy file: ' + path);
 
-def createNewFile(projectData,newFile):
+def createNewFile(targetPath,projectData,newFile):
     for item in newFile:
         fileName = getFormatName(projectData,item);
-        basePath = projectData['targetDir'] if projectData['targetDir'] != '' else os.path.abspath('');
-        path = os.path.join(basePath,projectData['targetName'],fileName);
+        path = os.path.join(targetPath,fileName);
         file = open(path,'w');
         file.close();
         print('Create File: ' + path);
@@ -105,10 +108,10 @@ def initProjectData(projectData):
     # 命令行参数读取
     if len(sys.argv) < 3:
         print('You can assign source directory through command line arguments,\nexample: -s "path"');
-    if len(sys.argv) == 3:
-        if sys.argv[1] == '-s' and os.path.exists(sys.argv[2]):
+    # 三个参数
+    if len(sys.argv) == 3 and sys.argv[1] == '-s':
+        if os.path.exists(sys.argv[2]):
             projectData['sourceDir'] = sys.argv[2];
-
     # 判读source是否存在
     if not os.path.isdir(projectData['sourceDir']):
         raise Exception('SourceDir: ' + projectData['sourceDir'] + ' isn\'t exist.');
@@ -152,16 +155,18 @@ def getFormatName(projectData,fmt):
 if __name__ == '__main__':
     try:
         print('Start load project_data.json...');
+        # 当前运行目录
+        baseDir = os.path.dirname(sys.argv[0]);
         # 加载json
-        projectData = loadProjectData();
+        projectData = loadProjectData(baseDir);
         # 数据初始化
         initProjectData(projectData);
         # 创建target目录，并返回目录路径
-        targetPath = createTargetDir(projectData);
+        targetPath = createTargetDir(baseDir,projectData);
         # 复制目录以及文件
         copyDirAndFile(projectData['sourceDir'],projectData['sourceDir'],targetPath,projectData['packageTask']);
         # 创建新文件
-        createNewFile(projectData,projectData['packageTask']['newFile']);
+        createNewFile(targetPath,projectData,projectData['packageTask']['newFile']);
         print('Complete package project...');
     except Exception as ex:
         print(ex);
