@@ -2,12 +2,13 @@
 	"projectName": "",
 	"projectVersion": "",
 	"releaseDate": "",
-	"sourceDir": "F:\\Work\\Source Code\\SFCS\\MI\\MIREOPTA01",
+	"dateFormat": "%Y%m%d",
+	"sourceDir": "",
 	"sourceBin": "bin",
 	"targetDir": "%Desktop%",
 	"targetName": "${projectName}_${projectVersion}_${releaseDate}",
 	"packageTask": {
-		"exceptDir": [
+		"excludeDir": [
 			"App_Data",
 			"App_Start",
 			"My Project",
@@ -18,13 +19,13 @@
 			"bin\\x64",
 			"bin\\x86"
 		],
-		"exceptFile": [
+		"excludeFile": [
 			"Web.Debug.config",
 			"Web.Release.config",
 			"packages.config",
 			"Thumbs.db"
 		],
-		"exceptSuffix": [
+		"excludeSuffix": [
 			"*.gpState",
 			"*.vbproj",
 			"*.csproj",

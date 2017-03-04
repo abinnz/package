@@ -3,7 +3,7 @@ import json
 import os
 import sys
 import shutil
-import datetime
+from datetime import datetime
 import re
 import win32api
 
@@ -47,7 +47,7 @@ def copyDirAndFile(baseSourcePath,sourcePath,targetPath,packageTask):
         # 文件夹
         if os.path.isdir(path):
             # 非排除的文件夹
-            if not isExceptDir(baseSourcePath,path,packageTask['exceptDir']):
+            if not isExcludeDir(baseSourcePath,path,packageTask['excludeDir']):
                 createPath = os.path.join(targetPath,item);
                 os.mkdir(createPath);
                 print('Create directory: ' + createPath);
@@ -55,7 +55,7 @@ def copyDirAndFile(baseSourcePath,sourcePath,targetPath,packageTask):
                 copyDirAndFile(baseSourcePath,path,createPath,packageTask);
         # 文件
         else:
-            if not isExceptFile(baseSourcePath,path,packageTask['exceptFile'],packageTask['exceptSuffix']):
+            if not isExcludeFile(baseSourcePath,path,packageTask['excludeFile'],packageTask['excludeSuffix']):
                 # 复制文件
                 shutil.copy(path,targetPath);
                 print('Copy file: ' + path);
@@ -68,8 +68,8 @@ def createNewFile(targetPath,projectData,newFile):
         file.close();
         print('Create File: ' + path);
 
-def isExceptFile(basePath,path,exceptFile,exceptSuffix):
-    lt = exceptFile + exceptSuffix;
+def isExcludeFile(basePath,path,excludeFile,excludeSuffix):
+    lt = excludeFile + excludeSuffix;
     # 排除文件
     for item in lt:
         if '\\' in item:
@@ -83,9 +83,9 @@ def isExceptFile(basePath,path,exceptFile,exceptSuffix):
                 return True; 
     return False;
 
-def isExceptDir(basePath,path,exceptDir):
+def isExcludeDir(basePath,path,excludeDir):
     result = [];
-    for item in exceptDir:
+    for item in excludeDir:
         value = os.path.join(basePath,item).replace('\\','\\\\');
         if re.match(value + "$",path):
             result.append(True);
@@ -121,7 +121,7 @@ def initProjectData(projectData):
     print('ProjectName: ' + projectData['projectName']);
     # 获取releaseDate
     if projectData['releaseDate'] == '':
-        projectData['releaseDate'] = datetime.datetime.now().strftime('%Y%m%d');
+        projectData['releaseDate'] = datetime.now().strftime(projectData['dateFormat']);
     print('ReleaseDate: ' + projectData['releaseDate']);
     # 获取projectVersion
     if projectData['projectVersion'] == '':
