@@ -24,11 +24,6 @@
 
 注意：有关路径的分隔符为：`\\`
 
-### 运行
-1. 编辑start.bat，替换%1为指定目录
-2. 运行start.bat
-
-### 高级用法
-自行添加文件夹右键菜单，快速进行打包。
-
-
+### 首次运行
+1. 运行register.py，快速生成start.bat和package.reg
+2. 双击注册package.reg，添加鼠标右键文件夹菜单：Package Project
