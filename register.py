@@ -19,7 +19,7 @@ def createRegisterFile(regFilePath, startFilePath):
 def createStartFile(startFilePath, exeFilePath):
     file = open(startFilePath, 'w', encoding = UTF8);
     file.writelines('@echo off' + LF);
-    file.writelines('"' + exeFilePath + '"' + ' "-s" "%1"' + LF);
+    file.writelines('"' + exeFilePath + '"' + ' "-s" %1' + LF);
     file.writelines('pause');
     file.close();
 
